@@ -1,207 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<ScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:padding="24dp">
 
-    <LinearLayout
-        android:layout_width="match_parent"
+    <TextView
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="20dp">
+        android:text="AI TikTok Generator"
+        android:textSize="28sp"
+        android:textStyle="bold" />
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="AI TikTok Generator"
-            android:textSize="28sp"
-            android:textStyle="bold" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Buat gambar, prompt, dan video"
+        android:textSize="16sp" />
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:gravity="center"
-            android:text="Generate Gambar, Prompt dan Video"
-            android:textSize="16sp" />
-
-        <EditText
-            android:id="@+id/etProduct"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            android:hint="Nama Produk"
-            android:inputType="text" />
-
-        <EditText
-            android:id="@+id/etDescription"
-            android:layout_width="match_parent"
-            android:layout_height="100dp"
-            android:layout_marginTop="12dp"
-            android:gravity="top"
-            android:hint="Deskripsi Produk"
-            android:inputType="textMultiLine" />
-
-        <EditText
-            android:id="@+id/etScene"
-            android:layout_width="match_parent"
-            android:layout_height="100dp"
-            android:layout_marginTop="12dp"
-            android:gravity="top"
-            android:hint="Scene / Suasana"
-            android:inputType="textMultiLine" />
-
-        <Button
-            android:id="@+id/btnReference"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="UPLOAD REFERENSI" />
-
-        <Button
-            android:id="@+id/btnPrompt"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:text="GENERATE PROMPT" />
-
-        <Button
-            android:id="@+id/btnImage"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:text="GENERATE GAMBAR" />
-
-        <Button
-            android:id="@+id/btnVideo"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:text="GENERATE VIDEO" />
-
-        <TextView
-            android:id="@+id/tvResult"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:padding="12dp"
-            android:text="Hasil akan muncul di sini..."
-            android:textSize="16sp" />
-
-        <Button
-            android:id="@+id/btnCopy"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:text="COPY HASIL" />
-
-    </LinearLayout>
-
-</ScrollView>            android:padding="14dp"/>
-
-        <EditText
-            android:id="@+id/etDescription"
-            android:layout_width="match_parent"
-            android:layout_height="110dp"
-            android:hint="Deskripsi / keunggulan produk"
-            android:gravity="top"
-            android:inputType="textMultiLine"
-            android:padding="14dp"
-            android:layout_marginTop="12dp"/>
-
-        <EditText
-            android:id="@+id/etScene"
-            android:layout_width="match_parent"
-            android:layout_height="100dp"
-            android:hint="Scene / suasana gambar"
-            android:gravity="top"
-            android:inputType="textMultiLine"
-            android:padding="14dp"
-            android:layout_marginTop="12dp"/>
-
-        <Button
-            android:id="@+id/btnReference"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="UPLOAD REFERENSI"
-            android:layout_marginTop="16dp"/>
-
-        <Button
-            android:id="@+id/btnPrompt"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="GENERATE PROMPT"
-            android:layout_marginTop="10dp"/>
-
-        <Button
-            android:id="@+id/btnImage"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="GENERATE GAMBAR"
-            android:layout_marginTop="10dp"/>
-
-        <Button
-            android:id="@+id/btnVideo"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="GENERATE VIDEO"
-            android:layout_marginTop="10dp"/>
-
-        <TextView
-            android:id="@+id/tvResult"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Hasil akan muncul di sini..."
-            android:textSize="16sp"
-            android:padding="16dp"
-            android:layout_marginTop="20dp"/>
-
-        <Button
-            android:id="@+id/btnCopy"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="COPY HASIL"
-            android:layout_marginTop="10dp"/>
-
-    </LinearLayout>
-
-</ScrollView>            android:padding="14dp"/>
-
-        <EditText
-            android:id="@+id/etDescription"
-            android:layout_width="match_parent"
-            android:layout_height="120dp"
-            android:hint="Deskripsi / keunggulan produk"
-            android:gravity="top"
-            android:inputType="textMultiLine"
-            android:padding="14dp"
-            android:layout_marginTop="12dp"/>
-
-        <Button
-            android:id="@+id/btnGenerate"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="GENERATE KONTEN"
-            android:layout_marginTop="16dp"/>
-
-        <TextView
-            android:id="@+id/tvResult"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Hasil akan muncul di sini..."
-            android:textSize="16sp"
-            android:padding="16dp"
-            android:layout_marginTop="20dp"/>
-
-        <Button
-            android:id="@+id/btnCopy"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="COPY HASIL"
-            android:layout_marginTop="12dp"/>
-
-    </LinearLayout>
-
-</ScrollView>
+</LinearLayout>
