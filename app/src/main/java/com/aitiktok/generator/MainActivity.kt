@@ -8,16 +8,31 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.view.Gravity
-import android.widget.Button
-import android.widget.EditText
-import android.widget.LinearLayout
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 
 class MainActivity : Activity() {
 
     private lateinit var productInput: EditText
+    private lateinit var presetSpinner: Spinner
+    private lateinit var resolutionSpinner: Spinner
     private lateinit var result: TextView
+
+    private val presets = arrayOf(
+        "UGC Story Selling",
+        "Premium Product",
+        "TikTok Affiliate",
+        "Kamera Bergerak Saja",
+        "Bengkel / Workshop",
+        "Product Showcase",
+        "UGC Human",
+        "Viral Hook"
+    )
+
+    private val resolutions = arrayOf(
+        "HD 720p",
+        "Full HD 1080p",
+        "4K UHD 2160p"
+    )
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,15 +50,45 @@ class MainActivity : Activity() {
         title.setPadding(0, 0, 0, 20)
 
         productInput = EditText(this)
-        productInput.hint = "Masukkan nama / deskripsi produk"
+        productInput.hint = "Nama / deskripsi produk"
         productInput.setTextColor(Color.WHITE)
         productInput.setHintTextColor(Color.GRAY)
 
+        val presetLabel = TextView(this)
+        presetLabel.text = "PRESET"
+        presetLabel.setTextColor(Color.WHITE)
+        presetLabel.setPadding(0, 15, 0, 5)
+
+        presetSpinner = Spinner(this)
+
+        val presetAdapter = ArrayAdapter(
+            this,
+            android.R.layout.simple_spinner_dropdown_item,
+            presets
+        )
+
+        presetSpinner.adapter = presetAdapter
+
+        val resolutionLabel = TextView(this)
+        resolutionLabel.text = "RESOLUSI OUTPUT"
+        resolutionLabel.setTextColor(Color.WHITE)
+        resolutionLabel.setPadding(0, 15, 0, 5)
+
+        resolutionSpinner = Spinner(this)
+
+        val resolutionAdapter = ArrayAdapter(
+            this,
+            android.R.layout.simple_spinner_dropdown_item,
+            resolutions
+        )
+
+        resolutionSpinner.adapter = resolutionAdapter
+
         val imageButton = Button(this)
-        imageButton.text = "PILIH REFERENSI"
+        imageButton.text = "PILIH GAMBAR REFERENSI"
 
         val generateButton = Button(this)
-        generateButton.text = "GENERATE VIDEO + CONTENT"
+        generateButton.text = "GENERATE VIDEO"
 
         val copyButton = Button(this)
         copyButton.text = "COPY HASIL"
@@ -56,6 +101,10 @@ class MainActivity : Activity() {
 
         root.addView(title)
         root.addView(productInput)
+        root.addView(presetLabel)
+        root.addView(presetSpinner)
+        root.addView(resolutionLabel)
+        root.addView(resolutionSpinner)
         root.addView(imageButton)
         root.addView(generateButton)
         root.addView(copyButton)
@@ -68,7 +117,7 @@ class MainActivity : Activity() {
         }
 
         generateButton.setOnClickListener {
-            generateContent()
+            generatePrompt()
         }
 
         copyButton.setOnClickListener {
@@ -77,13 +126,17 @@ class MainActivity : Activity() {
     }
 
     private fun pilihGambar() {
+
         val intent = Intent(Intent.ACTION_OPEN_DOCUMENT)
+
         intent.type = "image/*"
+
         intent.addCategory(Intent.CATEGORY_OPENABLE)
+
         startActivityForResult(intent, 100)
     }
 
-    private fun generateContent() {
+    private fun generatePrompt() {
 
         val produk = productInput.text.toString().trim()
 
@@ -96,76 +149,132 @@ class MainActivity : Activity() {
             return
         }
 
-        val hasil = """
-            
-            🎬 VIDEO PROMPT
-            
-            Produk: $produk
-            
-            Format vertical 9:16, durasi 10 detik,
-            gaya UGC TikTok realistis dan premium.
-            
-            PERTAHANKAN REFERENSI PRODUK 100%.
-            Jangan mengubah bentuk, warna, ukuran,
-            logo, tulisan, tekstur, detail dan desain produk.
-            
-            Hanya kamera yang bergerak secara natural.
-            Gerakan kamera slow push-in,
-            sedikit handheld cinematic,
-            fokus tetap pada produk.
-            
-            Background realistis dan elegan.
-            Lighting natural, detail tajam,
-            realistic skin and material texture.
-            Tidak ada objek tambahan yang mengganggu.
-            Tidak ada teks tambahan di layar.
-            
-            
-            🎞️ STORYBOARD
-            
-            0-3 detik:
-            Kamera mulai dari medium shot,
-            perlahan mendekati produk.
-            
-            3-7 detik:
-            Kamera melakukan slow push-in
-            sambil mempertahankan produk sebagai fokus utama.
-            
-            7-10 detik:
-            Kamera berhenti pada close-up premium
-            yang memperlihatkan detail produk.
-            
-            
-            🗣️ VOICE OVER
-            
-            "Kalau kamu lagi cari produk yang praktis
-            dan bikin aktivitas jadi lebih mudah,
-            ini wajib banget kamu lihat.
-            Link-nya sudah aku sematkan."
-            
-            
-            📣 CTA
-            
-            "Link sudah aku sematkan."
-            
-            
-            📝 CAPTION
-            
-            Lagi cari produk yang praktis dan worth it?
-            Coba lihat yang satu ini.
-            Detail produknya bisa langsung kamu cek
-            lewat link yang sudah aku sematkan 🔥
-            
-            
-            #️⃣ HASHTAG
-            
-            #TikTokShop #TikTokAffiliate #AffiliateIndonesia
-            #RekomendasiProduk #ProdukViral #RacunTikTok
-            #FYP #FYPIndonesia #BelanjaOnline
-            
-        """.trimIndent()
+        val preset = presetSpinner.selectedItem.toString()
+        val resolution = resolutionSpinner.selectedItem.toString()
 
-        result.text = hasil
+        val outputResolution = when (resolution) {
+            "HD 720p" -> "1280x720"
+            "Full HD 1080p" -> "1920x1080"
+            "4K UHD 2160p" -> "2160x3840"
+            else -> "1920x1080"
+        }
+
+        val motion = when (preset) {
+
+            "UGC Story Selling" ->
+                "slow push-in natural menuju produk dan close-up pada akhir video."
+
+            "Premium Product" ->
+                "cinematic slow push-in dengan subtle orbit mengelilingi produk."
+
+            "TikTok Affiliate" ->
+                "handheld smartphone movement yang natural seperti konten TikTok."
+
+            "Kamera Bergerak Saja" ->
+                "HANYA KAMERA YANG BERGERAK. Produk dan seluruh detail referensi tetap."
+
+            "Bengkel / Workshop" ->
+                "slow push-in menuju produk dengan aktivitas workshop tetap natural."
+
+            "Product Showcase" ->
+                "slow cinematic slide kemudian close-up pada detail produk."
+
+            "UGC Human" ->
+                "kamera handheld mengikuti tangan yang memegang produk secara natural."
+
+            "Viral Hook" ->
+                "quick push-in halus dari close-up menuju fokus utama produk."
+
+            else ->
+                "kamera bergerak perlahan dan stabil."
+        }
+
+        val prompt = """
+
+RUNWAY IMAGE-TO-VIDEO
+
+PRESET:
+$preset
+
+OUTPUT:
+Resolution target: $outputResolution
+Aspect Ratio: 9:16
+Duration: 10 seconds
+Quality: Maximum
+Style: realistic, cinematic, premium
+
+PRODUCT:
+$produk
+
+REFERENCE LOCK:
+Gunakan gambar referensi sebagai sumber utama.
+Pertahankan bentuk produk.
+Pertahankan warna produk.
+Pertahankan logo.
+Pertahankan tulisan.
+Pertahankan tekstur.
+Pertahankan material.
+Pertahankan desain.
+
+Jangan melakukan redesign.
+Jangan melakukan morphing.
+Jangan mengubah identitas produk.
+
+CAMERA:
+$motion
+
+VISUAL:
+Natural lighting.
+Sharp details.
+Realistic material texture.
+Smooth motion.
+Premium commercial quality.
+Clean composition.
+
+NEGATIVE:
+No product deformation.
+No logo changes.
+No color changes.
+No extra products.
+No duplicated objects.
+No distorted hands.
+No text overlay.
+No watermark.
+
+VOICE OVER INDONESIA:
+
+"Kalau kamu lagi cari produk yang praktis
+dan worth it, ini wajib banget kamu lihat.
+Link-nya sudah aku sematkan."
+
+CTA:
+
+"Link sudah aku sematkan."
+
+CAPTION:
+
+Produk yang wajib kamu lihat kalau lagi cari
+sesuatu yang praktis dan worth it 🔥
+
+HASHTAG:
+
+#TikTokShop
+#TikTokAffiliate
+#AffiliateIndonesia
+#RacunTikTok
+#ProdukViral
+#FYP
+#FYPIndonesia
+
+4K PROCESSING:
+
+Jika provider menghasilkan resolusi lebih rendah,
+gunakan AI upscale sebagai tahap akhir menuju
+2160x3840 vertical 4K UHD.
+
+""".trimIndent()
+
+        result.text = prompt
     }
 
     private fun copyHasil() {
@@ -173,11 +282,13 @@ class MainActivity : Activity() {
         val text = result.text.toString()
 
         if (text == "Hasil akan muncul di sini.") {
+
             Toast.makeText(
                 this,
                 "Generate hasil terlebih dahulu",
                 Toast.LENGTH_SHORT
             ).show()
+
             return
         }
 
@@ -186,7 +297,7 @@ class MainActivity : Activity() {
                     as ClipboardManager
 
         val clip = ClipData.newPlainText(
-            "AI TikTok Content",
+            "AI TikTok Prompt",
             text
         )
 
