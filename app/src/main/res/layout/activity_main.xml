@@ -14,27 +14,92 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:gravity="center"
             android:text="AI TikTok Generator"
             android:textSize="28sp"
-            android:textStyle="bold"
-            android:gravity="center"/>
+            android:textStyle="bold" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Generate gambar, prompt, dan video untuk konten TikTok"
-            android:textSize="15sp"
-            android:gravity="center"
             android:layout_marginTop="8dp"
-            android:layout_marginBottom="20dp"/>
+            android:gravity="center"
+            android:text="Generate Gambar, Prompt dan Video"
+            android:textSize="16sp" />
 
         <EditText
             android:id="@+id/etProduct"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Nama produk"
-            android:inputType="text"
-            android:padding="14dp"/>
+            android:layout_marginTop="24dp"
+            android:hint="Nama Produk"
+            android:inputType="text" />
+
+        <EditText
+            android:id="@+id/etDescription"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_marginTop="12dp"
+            android:gravity="top"
+            android:hint="Deskripsi Produk"
+            android:inputType="textMultiLine" />
+
+        <EditText
+            android:id="@+id/etScene"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_marginTop="12dp"
+            android:gravity="top"
+            android:hint="Scene / Suasana"
+            android:inputType="textMultiLine" />
+
+        <Button
+            android:id="@+id/btnReference"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="UPLOAD REFERENSI" />
+
+        <Button
+            android:id="@+id/btnPrompt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="GENERATE PROMPT" />
+
+        <Button
+            android:id="@+id/btnImage"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="GENERATE GAMBAR" />
+
+        <Button
+            android:id="@+id/btnVideo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="GENERATE VIDEO" />
+
+        <TextView
+            android:id="@+id/tvResult"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:padding="12dp"
+            android:text="Hasil akan muncul di sini..."
+            android:textSize="16sp" />
+
+        <Button
+            android:id="@+id/btnCopy"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="COPY HASIL" />
+
+    </LinearLayout>
+
+</ScrollView>            android:padding="14dp"/>
 
         <EditText
             android:id="@+id/etDescription"
