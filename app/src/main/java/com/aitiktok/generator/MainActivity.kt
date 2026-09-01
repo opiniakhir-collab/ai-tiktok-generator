@@ -2,39 +2,158 @@ package com.aitiktok.generator
 
 import android.app.Activity
 import android.os.Bundle
+import android.content.ClipData
+import android.content.ClipboardManager
+import android.content.Context
+import android.content.Intent
+import android.graphics.Color
+import android.net.Uri
+import android.view.Gravity
+import android.widget.Button
+import android.widget.EditText
+import android.widget.LinearLayout
+import android.widget.TextView
+import android.widget.Toast
 
 class MainActivity : Activity() {
 
+    private lateinit var promptInput: EditText
+    private lateinit var resultText: TextView
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-    }
-}            intent.type = "image/*"
-            intent.addCategory(Intent.CATEGORY_OPENABLE)
-            startActivityForResult(intent, PICK_IMAGE)
+
+        val root = LinearLayout(this)
+        root.orientation = LinearLayout.VERTICAL
+        root.setPadding(32, 40, 32, 32)
+        root.setBackgroundColor(Color.rgb(15, 15, 20))
+
+        val title = TextView(this)
+        title.text = "AI TikTok Generator"
+        title.textSize = 24f
+        title.setTextColor(Color.WHITE)
+        title.gravity = Gravity.CENTER
+        title.setPadding(0, 0, 0, 30)
+
+        promptInput = EditText(this)
+        promptInput.hint = "Masukkan prompt gambar / video..."
+        promptInput.setTextColor(Color.WHITE)
+        promptInput.setHintTextColor(Color.GRAY)
+        promptInput.setPadding(20, 20, 20, 20)
+
+        val generateButton = Button(this)
+        generateButton.text = "GENERATE PROMPT"
+
+        val copyButton = Button(this)
+        copyButton.text = "COPY PROMPT"
+
+        val imageButton = Button(this)
+        imageButton.text = "PILIH GAMBAR REFERENSI"
+
+        val videoButton = Button(this)
+        videoButton.text = "BUKA VIDEO GENERATOR"
+
+        resultText = TextView(this)
+        resultText.text = "Hasil prompt akan muncul di sini."
+        resultText.textSize = 16f
+        resultText.setTextColor(Color.WHITE)
+        resultText.setPadding(10, 30, 10, 30)
+
+        root.addView(title)
+        root.addView(promptInput)
+        root.addView(generateButton)
+        root.addView(copyButton)
+        root.addView(imageButton)
+        root.addView(videoButton)
+        root.addView(resultText)
+
+        setContentView(root)
+
+        generateButton.setOnClickListener {
+            generatePrompt()
         }
 
-        // Generate prompt
-        btnPrompt.setOnClickListener {
+        copyButton.setOnClickListener {
+            copyPrompt()
+        }
 
-            val product = etProduct.text.toString().trim()
-            val description = etDescription.text.toString().trim()
-            val scene = etScene.text.toString().trim()
+        imageButton.setOnClickListener {
+            pickImage()
+        }
 
-            if (product.isEmpty()) {
-                etProduct.error = "Masukkan nama produk"
-                return@setOnClickListener
-            }
+        videoButton.setOnClickListener {
+            openVideoGenerator()
+        }
+    }
 
-            if (description.isEmpty()) {
-                etDescription.error = "Masukkan deskripsi produk"
-                return@setOnClickListener
-            }
+    private fun generatePrompt() {
 
-            val prompt = """
-BUAT GAMBAR UGC TIKTOK AFFILIATE
+        val input = promptInput.text.toString().trim()
 
-Produk: $product
+        if (input.isEmpty()) {
+            Toast.makeText(
+                this,
+                "Masukkan prompt terlebih dahulu",
+                Toast.LENGTH_SHORT
+            ).show()
+            return
+        }
+
+        val prompt = """
+            UGC TikTok affiliate, vertical 9:16.
+            Pertahankan produk dan referensi asli.
+            Jangan mengubah bentuk, warna, detail, logo,
+            tekstur atau desain produk.
+            Tidak ada teks tambahan.
+            Tampilan realistis dan natural.
+            Kamera bergerak perlahan dan stabil.
+            
+            $input
+        """.trimIndent()
+
+        resultText.text = prompt
+    }
+
+    private fun copyPrompt() {
+
+        val text = resultText.text.toString()
+
+        val clipboard =
+            getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+
+        val clip = ClipData.newPlainText(
+            "AI Prompt",
+            text
+        )
+
+        clipboard.setPrimaryClip(clip)
+
+        Toast.makeText(
+            this,
+            "Prompt berhasil disalin",
+            Toast.LENGTH_SHORT
+        ).show()
+    }
+
+    private fun pickImage() {
+
+        val intent = Intent(Intent.ACTION_OPEN_DOCUMENT)
+        intent.type = "image/*"
+        intent.addCategory(Intent.CATEGORY_OPENABLE)
+
+        startActivityForResult(intent, 100)
+    }
+
+    private fun openVideoGenerator() {
+
+        val intent = Intent(
+            Intent.ACTION_VIEW,
+            Uri.parse("https://www.google.com")
+        )
+
+        startActivity(intent)
+    }
+}Produk: $product
 
 Deskripsi:
 $description
