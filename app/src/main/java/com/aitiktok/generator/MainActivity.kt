@@ -107,6 +107,125 @@ class MainActivity : Activity() {
             Tidak ada teks tambahan.
             Tampilan realistis dan natural.
             Kamera bergerak perlahan dan stabil.
+
+            $input
+        """.trimIndent()
+
+        resultText.text = prompt
+    }
+
+    private fun copyPrompt() {
+
+        val text = resultText.text.toString()
+
+        val clipboard =
+            getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+
+        val clip = ClipData.newPlainText(
+            "AI Prompt",
+            text
+        )
+
+        clipboard.setPrimaryClip(clip)
+
+        Toast.makeText(
+            this,
+            "Prompt berhasil disalin",
+            Toast.LENGTH_SHORT
+        ).show()
+    }
+
+    private fun pickImage() {
+
+        val intent = Intent(Intent.ACTION_OPEN_DOCUMENT)
+        intent.type = "image/*"
+        intent.addCategory(Intent.CATEGORY_OPENABLE)
+
+        startActivityForResult(intent, 100)
+    }
+
+    private fun openVideoGenerator() {
+
+        val intent = Intent(
+            Intent.ACTION_VIEW,
+            Uri.parse("https://www.google.com")
+        )
+
+        startActivity(intent)
+    }
+}
+        promptInput = EditText(this)
+        promptInput.hint = "Masukkan prompt gambar / video..."
+        promptInput.setTextColor(Color.WHITE)
+        promptInput.setHintTextColor(Color.GRAY)
+        promptInput.setPadding(20, 20, 20, 20)
+
+        val generateButton = Button(this)
+        generateButton.text = "GENERATE PROMPT"
+
+        val copyButton = Button(this)
+        copyButton.text = "COPY PROMPT"
+
+        val imageButton = Button(this)
+        imageButton.text = "PILIH GAMBAR REFERENSI"
+
+        val videoButton = Button(this)
+        videoButton.text = "BUKA VIDEO GENERATOR"
+
+        resultText = TextView(this)
+        resultText.text = "Hasil prompt akan muncul di sini."
+        resultText.textSize = 16f
+        resultText.setTextColor(Color.WHITE)
+        resultText.setPadding(10, 30, 10, 30)
+
+        root.addView(title)
+        root.addView(promptInput)
+        root.addView(generateButton)
+        root.addView(copyButton)
+        root.addView(imageButton)
+        root.addView(videoButton)
+        root.addView(resultText)
+
+        setContentView(root)
+
+        generateButton.setOnClickListener {
+            generatePrompt()
+        }
+
+        copyButton.setOnClickListener {
+            copyPrompt()
+        }
+
+        imageButton.setOnClickListener {
+            pickImage()
+        }
+
+        videoButton.setOnClickListener {
+            openVideoGenerator()
+        }
+    }
+
+    private fun generatePrompt() {
+
+        val input = promptInput.text.toString().trim()
+
+        if (input.isEmpty()) {
+            Toast.makeText(
+                this,
+                "Masukkan prompt terlebih dahulu",
+                Toast.LENGTH_SHORT
+            ).show()
+            return
+        }
+
+        val prompt = """
+            UGC TikTok affiliate, vertical 9:16.
+            Pertahankan produk dan referensi asli.
+            Jangan mengubah bentuk, warna, detail, logo,
+            tekstur atau desain produk.
+            Tidak ada teks tambahan.
+            Tampilan realistis dan natural.
+            Kamera bergerak perlahan dan stabil.
             
             $input
         """.trimIndent()
