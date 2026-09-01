@@ -2,39 +2,14 @@ package com.aitiktok.generator
 
 import android.app.Activity
 import android.os.Bundle
-import android.content.ClipData
-import android.content.ClipboardManager
-import android.content.Context
-import android.content.Intent
-import android.widget.Button
-import android.widget.EditText
-import android.widget.TextView
-import android.widget.Toast
 
 class MainActivity : Activity() {
-
-    private val PICK_IMAGE = 100
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
-        val etProduct = findViewById<EditText>(R.id.etProduct)
-        val etDescription = findViewById<EditText>(R.id.etDescription)
-        val etScene = findViewById<EditText>(R.id.etScene)
-
-        val btnReference = findViewById<Button>(R.id.btnReference)
-        val btnPrompt = findViewById<Button>(R.id.btnPrompt)
-        val btnImage = findViewById<Button>(R.id.btnImage)
-        val btnVideo = findViewById<Button>(R.id.btnVideo)
-        val btnCopy = findViewById<Button>(R.id.btnCopy)
-
-        val tvResult = findViewById<TextView>(R.id.tvResult)
-
-        // Upload gambar referensi
-        btnReference.setOnClickListener {
-            val intent = Intent(Intent.ACTION_OPEN_DOCUMENT)
-            intent.type = "image/*"
+    }
+}            intent.type = "image/*"
             intent.addCategory(Intent.CATEGORY_OPENABLE)
             startActivityForResult(intent, PICK_IMAGE)
         }
