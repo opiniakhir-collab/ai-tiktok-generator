@@ -2,39 +2,20 @@ package com.aitiktok.generator
 
 import android.app.Activity
 import android.os.Bundle
-import android.content.ClipData
-import android.content.ClipboardManager
-import android.content.Context
-import android.content.Intent
-import android.graphics.Color
-import android.net.Uri
-import android.view.Gravity
-import android.widget.Button
-import android.widget.EditText
-import android.widget.LinearLayout
 import android.widget.TextView
-import android.widget.Toast
 
 class MainActivity : Activity() {
-
-    private lateinit var promptInput: EditText
-    private lateinit var resultText: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val root = LinearLayout(this)
-        root.orientation = LinearLayout.VERTICAL
-        root.setPadding(32, 40, 32, 32)
-        root.setBackgroundColor(Color.rgb(15, 15, 20))
+        val textView = TextView(this)
+        textView.text = "AI TikTok Generator"
+        textView.textSize = 24f
 
-        val title = TextView(this)
-        title.text = "AI TikTok Generator"
-        title.textSize = 24f
-        title.setTextColor(Color.WHITE)
-        title.gravity = Gravity.CENTER
-        title.setPadding(0, 0, 0, 30)
-
+        setContentView(textView)
+    }
+}
         promptInput = EditText(this)
         promptInput.hint = "Masukkan prompt gambar / video..."
         promptInput.setTextColor(Color.WHITE)
